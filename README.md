@@ -1,6 +1,6 @@
 # Flora Blink Shoe
 
-A wearable shoe that responds to movement with accelerating LED blinks!
+A wearable shoe that responds to movement with accelerating LED blinks! Semi-inspired by [Skechers light up shoes](https://www.skechers.com/technologies/features/lights/?start=0&sz=24)
 
 ---
 
@@ -11,7 +11,7 @@ A wearable shoe that responds to movement with accelerating LED blinks!
 - [Code Walkthrough](#code-walkthrough)
 - [Let's Get Sewing](#lets-get-sewing)
 - [Troubleshooting](#troubleshooting)
-- [Calibrating](#calibrating)
+- [Calibrating](#calibration--testing)
 - [Done!](#done)
 
 ---
@@ -37,7 +37,6 @@ I created this shoe with the intention of modifying my running shoes to make me 
 - 1x [LiPo battery](https://www.amazon.com/EEMB-Rechargeable-Connector-Wireless-Polarity/dp/B0B7N2T1TD)
 - 1x Shoe (any)
 - 1x Spool of thread (any)
-- 1x Ordinary needle (any)
 - 1x [Leather needle](https://www.amazon.com/dp/B08H86BQJB)
 
 ![Lay out!](images/01_parts_list.jpg)
@@ -101,7 +100,7 @@ void updateFlashRate() {
   }
 }
 ```
-This is the other important helper function! This function is responsible for calculating and updating the rate at which the LEDs blink. The math behind the calculation works by finding the max and min Hz relative to the slowest and fastest time intervals, then finding a linear step size. This step size is then multiplied by the activity level!
+This is the other important helper function! This function is responsible for calculating and updating the rate at which the LEDs blink. The math behind the calculation works by finding the max and min Hz relative to the slowest and fastest time intervals, then finding a linear step size based on the number of possible activity levels. This step size is then multiplied by the activity level to arrive that the rate the LEDs will flash at each level.
 
 ---
 
@@ -206,16 +205,38 @@ Other shoes may require more sophisticated battery hiding. My backup plan if thi
 
 ## Troubleshooting
 
-[Common issues and how to fix them]
+Ensuring that things are working correctly with the physical aspect of this project is fairly straightforward. I will cover the areas that I had to spend the most time experimenting with.
+
+### LEDs lighting up
+If you are experiencing issues with the LEDs not lighting up correctly try the following:
+- Shoes move around, ensure that you did not sew any of the connections too tight causing them to fray or snap.
+- Ensure that the knots you tied between LEDs are solid, I mistakenly tied a false knot that came undone when I was not paying attention.
+
+If you are experiencing issues with the tilt sensor try the following:
+- Ensure that it is upright, the connector side should be facing the ground.
+- If you had to cross any threads, ensure they are not touching.
+- Ensure that it is mounted close to perpendicular to the ground. The motion we are recording depends on this.
 
 ---
 
-## Calibrating
+## Calibration & Testing
 
-[How to adjust settings and test the system]
+Testing the shoe is very straightforward:
+- Connect the Flora to your pc via a sufficiently long usb cable.
+- Monitor the serial ouput on the arduino IDE.
+- Move the shoe or take a step, the activity level should increase by 1.
+  - If you are seeing that the activity level is increasing by more than 1, increase the debounce delay value.
+  - If you are not seeing the activity level increase on steps, decrease the debounce delay value.
+
+Most of the testing on the software side will relate to the debounce delay. It was implemented to prevent false positives as the tilt sensor has only two states, small movements may cause rapid fluctuations in this state and the debounce delay ensures that the state is maintained for at least some time before it is counted as a movement.
+
+Here I will detail what values to adjust in the code when testing the device post construction.
+- If you used different LED pinouts, check the pin definiton variables.
+- To make the shoe more/less sensitive, adjust the debounce delay. This value increases sensitivity at the cost of false positives.
+- To increase the flash-rate, decrease the base interval & fastest interval.
+- To decrease the flash-rate, increase the base interval & fastest interval.
 
 ---
 
-## Done!
-
-[Final thoughts, usage tips, and next steps]
+## Conclusion
+This guide followed the steps that I took creating my own DIY light up shoe out of basic arduino parts and a running shoe. Your milage may vary with other types of shoes or design choices, but this guide should serve as a reference and starting point for similar projects! Thank you for reading.
