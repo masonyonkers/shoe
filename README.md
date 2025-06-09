@@ -107,7 +107,7 @@ This is the other important helper function! This function is responsible for ca
 
 ## Let's Get Sewing
 
-### Getting started:
+### Getting started
 I am going to have three LEDs. One on the front, outer side, and rear of the shoe. I'll begin by attaching conductive thread to the negative connectors of each LED:
 ![Negative LED hookups](images/02_staged_thread.jpg)
 Make sure that you loop through at least a few times before tying off and to use more thread than you think you'll need! The last thing we want is a loose connection somewhere that will be hard to [troubleshoot](#troubleshooting).
@@ -116,17 +116,91 @@ Make sure that you loop through at least a few times before tying off and to use
   - Tie two safety knots (simple over under half knots).
   - Loop through 3-5 additional times, ensuring that the loops are tight.
 
-### Attaching LEDs
+### Ground Circuit
 Now that the LEDs have their negative connectors wired up, let's get them attached to the shoe! The wiring setup this project uses involves a ground (negative) circuit that goes around the base of the shoe. This ensures that things stay simple as the LEDs will share the same ground.
+
 ![First LED](images/03_led.jpg)
 Here we have our first LED, the front LED, sewn onto the shoe. We are going about this one LED at a time and then tying them together to connect the ground circuit to ensure that each LED is placed exactly where we want it!
+
 ![First LED tail](images/04_led.jpg)
 Go at least halfway in each direction to where you want to put the next LED, that way the wires can meet in the middle and be tied together.
 ![First LED tail](images/05_led.jpg)
 Here is the other end! I'll go into less detail about the other two LEDs as the same process is reapeated!
+
 ![Second LED](images/06_led.jpg)
 ![Third LED](images/07_led.jpg)
 Here we have the second and third LEDs sewn in! Do not worry about the positive connections yet, we do not want to get started on those until the Flora is installed!
+
+![Switch](images/08_switch.jpg)
+I decided to place the switch on the outer side of the shoe, so I insatlled it between where the front and side LED's negative threads meet. This switch functions as an analog way to connect and disconnect the ground!
+
+![Attaching the Flora](images/09_flora.jpg)
+Up next is attaching the Flora, the most important piece of this project! It needs to be in place before wiring the positive threads from the LEDs or connecting the other end of the switch. If it is not in place, you'll wind up with loose threads once you attach it! I decided to choose two adjacent pinouts that I do not intend to use and used regular thread to keep it in place. The conductive threads that will connect to the pinouts I intend to use will help keep the Flora more secure than how it is now.
+- Make sure that it is already somewhat snug before moving on! We do not want it shifting around too much once we begin connecting everything together!
+
+![Connecting the ground](images/10_ground.jpg)
+Now it is time to connect the ground circuit to the Flora! You can attach anywhere on the ground circuit (with the exception of the part betweent the switch and the Flora) to any pinout that reads GND.
+
+![Ground closeup](images/11_ground.jpg)
+Here is a closeup of how overboard I go in connecting threads to the flora. You can probably get away with less loops around the connector, but I like to play it safe!
+
+![Connecting switch](images/12_switch.jpg)
+Here is the last piece of the ground circuit! Connect the other end of the switch to the 3.3V pinout on the Flora.
+
+### Positive Connections & Test
+Next up is attaching the positive ends of our LEDs to the Flora. You may use the same pin for each LED, but for convenience I decided to use a total of two pins, one with one LED & the other with two LEDs.
+
+![First positive](images/13_test.jpg)
+Similar to what we have been doing, connect the positive end of an LED to a pinout on the Flora. Here I am using pin 10.
+
+It is a good idea to test that our ground circuit actually works, since this is the first point at which that is possible. Load up the Flora with a simple program such as:
+```
+const int LED_PIN = 10;
+
+void setup() {
+  pinMode(LED_PIN, OUTPUT);
+  
+  digitalWrite(LED_PIN, HIGH);
+}
+
+void loop() {
+  // Do nothing - LEDs stay on
+}
+```
+This program turns the LED on pin 10 on and keeps it on, great for testing!
+
+![Second positive](images/14_test.jpg)
+Here is my second positive connection. This time the side LED. If you hook it up to a different pinout, make sure to update the test program!
+
+![Current state](images/15_zoom_out.jpg)
+Here you can see that I am testing both LEDs at once, always a good idea to make sure the ground was wired right this way!
+
+### Tilt Sensor
+Up next is installing the tilt sensor. This is the first part of this project that did not initially go my way!
+
+An important note:
+- The tilt sensor must be "upright", meaning that the side the connectors comes out of must be facing down.
+- I overlooked this detail when planning this project and had to move the sensor from inside the shoe to the outside.
+- Those holes you can see inside the shoe would have been perfect otherwise!
+
+![Tilt sensor](images/16_tilt.jpg)
+Start by bending the connectors that come out of the sensor like so, it is going on the side of the shoe with the connectors piercing the side to help keep it in place. Note that it is upside-down in this image!
+
+![Tilt sensor installed](images/17_tilt.jpg)
+Here you can see the sensor installed after multiple failed attempts to place it inside the shoe. Every shoe is different, so try what you feel works best to secure it with regular thread. Like myself your heart will guide you in the right direction eventually!
+
+![Tilt sensor connectors](images/18_tilt.jpg)
+The next step is attaching the tilt sensor to the rest of the circuit. I did this by tying and wrapping conductive threads to both connectors and then routing to the appropriate location. Here the negative connector is wired into the rest of the negative circuit and the positive is wired onto the Flora at pin 6.
+
+I had to cross some paths for the connections here, so make sure that you do not allow them to touch! Sewing on the opposite side as the thread you are crossing helps.
+
+### Battery
+Next up is installing the battery, almost done! With the shoe I am using this was the easiest part, other shoes may not offer this convenience. The inside of my shoe is lined with a loose, flexible material that was extremely easy to cut and slip the battery into. I cannot even notice it when wearing the shoe!
+
+![Battery](images/19_battery.jpg)
+Here you can see that I made a small cut to the inner lining of the shoe. The battery I am using is fairly bulky, but was easy to insert inside. It is also easy to remove for replacement down the line!
+
+Other shoes may require more sophisticated battery hiding. My backup plan if this did not work was to cut a portion of the insole out to place the battery in. It is my understanding that this is where "smart shoes" that contain bluetooth capabilities store their batteries and other components.
 
 ---
 
