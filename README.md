@@ -12,7 +12,7 @@ A wearable shoe that responds to movement with accelerating LED blinks! Semi-ins
 - [Let's Get Sewing](#lets-get-sewing)
 - [Troubleshooting](#troubleshooting)
 - [Calibrating](#calibration--testing)
-- [Done!](#done)
+- [Conclusion](#conclusion)
 
 ---
 
